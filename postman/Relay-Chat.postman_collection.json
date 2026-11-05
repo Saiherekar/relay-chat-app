@@ -1,0 +1,80 @@
+{
+  "info": {
+    "name": "Relay Chat API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "token", "value": "" },
+    { "key": "chatId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/user/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"Alex Morgan\",\"email\":\"alex@example.com\",\"password\":\"correct-horse-battery\"}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/user/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"alex@example.com\",\"password\":\"correct-horse-battery\"}"
+        }
+      }
+    },
+    {
+      "name": "List chats",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/user/chats"
+      }
+    },
+    {
+      "name": "Create chat",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/chat/create",
+        "body": { "mode": "raw", "raw": "{\"userAId\":1,\"userBId\":2}" }
+      }
+    },
+    {
+      "name": "Send message",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/chat/{{chatId}}/message/send",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\":\"Hello from Relay\",\"clientId\":\"client-message-001\"}"
+        }
+      }
+    },
+    {
+      "name": "Get messages",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/chat/{{chatId}}/messages?limit=30"
+      }
+    }
+  ]
+}
